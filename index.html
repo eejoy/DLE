@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PySpark Coding Practices</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background: #1f3a5f;
+        color: white;
+        text-align: center;
+        padding: 30px;
+    }
+
+    section {
+        background: white;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        color: #1f3a5f;
+    }
+
+    .icon {
+        font-size: 28px;
+    }
+
+    code {
+        display: block;
+        background: #272822;
+        color: #f8f8f2;
+        padding: 12px;
+        margin-top: 10px;
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+
+    .good {
+        border-left: 5px solid #2ecc71;
+    }
+
+    .bad {
+        border-left: 5px solid #e74c3c;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        color: #888;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🚀 PySpark Coding Best Practices</h1>
+    <p>Learn how to write clean, efficient, and scalable code</p>
+</header>
+
+<!-- 1 -->
+<section>
+<h2><span class="icon">📝</span> Use Clear, Descriptive Names</h2>
+<p>Improves readability and makes code easier to maintain.</p>
+
+<div class="bad">
+<strong>Bad:</strong>
+<code>df1 = spark.read.parquet("data")</code>
+</div>
+
+<div class="good">
+<strong>Good:</strong>
+<code>df_customers = spark.read.parquet("data")</code>
+</div>
+</section>
+
+<!-- 2 -->
+<section>
+<h2><span class="icon">🔗</span> Chain Transformations Cleanly</h2>
+<p>Makes pipelines easier to read and debug.</p>
+
+<div class="bad">
+<code>
+df = df.filter(col("age") > 18)
+df = df.select("name")
+</code>
+</div>
+
+<div class="good">
+<code>
+df = df.filter(col("age") > 18).select("name")
+</code>
+</div>
+</section>
+
+<!-- 3 -->
+<section>
+<h2><span class="icon">📐</span> Define Schema Explicitly</h2>
+<p>Improves performance and ensures consistent data types.</p>
+
+<div class="bad">
+<code>
+spark.read.csv("file.csv", inferSchema=True)
+</code>
+</div>
+
+<div class="good">
+<code>
+spark.read.schema(schema).csv("file.csv")
+</code>
+</div>
+</section>
+
+<!-- 4 -->
+<section>
+<h2><span class="icon">⚠️</span> Avoid Schema Inference</h2>
+<p>Schema inference is slow and can introduce errors.</p>
+
+<div class="bad">
+<code>
+inferSchema=True
+</code>
+</div>
+
+<div class="good">
+<code>
+Define schema manually for reliability
+</code>
+</div>
+</section>
+
+<!-- 5 -->
+<section>
+<h2><span class="icon">🚫</span> Handle Null Values</h2>
+<p>Prevents incorrect results and data quality issues.</p>
+
+<div class="bad">
+<code>
+df.filter(col("age") > 18)
+</code>
+</div>
+
+<div class="good">
+<code>
+df.filter(col("age").isNotNull()).filter(col("age") > 18)
+</code>
+</div>
+</section>
+
+<!-- 6 -->
+<section>
+<h2><span class="icon">⚙️</span> Avoid Hardcoding Configs</h2>
+<p>Makes code reusable and easier to maintain.</p>
+
+<div class="bad">
+<code>
+spark.read.parquet("/data/file")
+</code>
+</div>
+
+<div class="good">
+<code>
+spark.read.parquet(DATA_PATH)
+</code>
+</div>
+</section>
+
+<!-- 7 -->
+<section>
+<h2><span class="icon">📦</span> Select Only Required Columns</h2>
+<p>Reduces processing time and improves performance.</p>
+
+<div class="bad">
+<code>
+df = spark.read.parquet("data")
+</code>
+</div>
+
+<div class="good">
+<code>
+df = spark.read.parquet("data").select("id", "name")
+</code>
+</div>
+</section>
+
+<!-- 8 -->
+<section>
+<h2><span class="icon">🚀</span> Use Built-in Spark Functions</h2>
+<p>Enables Spark to optimize execution efficiently.</p>
+
+<div class="bad">
+<code>
+def upper_func(x):
+    return x.upper()
+    
+udf_upper = udf(upper_func)
+</code>
+</div>
+
+<div class="good">
+<code>
+from pyspark.sql.functions import upper
+
+df.withColumn("name_upper", upper(col("name")))
+</code>
+</div>
+</section>
+
+<footer>
+    <p>✅ Designed for learning PySpark best practices</p>
+</footer>
+
+</body>
+</html>
