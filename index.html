@@ -3,223 +3,221 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PySpark Coding Practices</title>
+<title>PySpark Good Coding Practice</title>
+
+<!-- Prism syntax highlighting -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f4f7fb;
-        margin: 0;
-        padding: 0;
-    }
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: #0f172a;
+    color: #e2e8f0;
+}
 
-    header {
-        background: #1f3a5f;
-        color: white;
-        text-align: center;
-        padding: 30px;
-    }
+header {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    text-align: center;
+    padding: 40px;
+}
 
-    section {
-        background: white;
-        margin: 20px;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+.container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
 
-    h2 {
-        color: #1f3a5f;
-    }
+.card {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
 
-    .icon {
-        font-size: 28px;
-    }
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
 
-    code {
-        display: block;
-        background: #272822;
-        color: #f8f8f2;
-        padding: 12px;
-        margin-top: 10px;
-        border-radius: 8px;
-        overflow-x: auto;
-    }
+h2 {
+    color: #38bdf8;
+}
 
-    .good {
-        border-left: 5px solid #2ecc71;
-    }
+.bad, .good {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+}
 
-    .bad {
-        border-left: 5px solid #e74c3c;
-    }
+.bad {
+    background: rgba(220,38,38,0.2);
+    border-left: 5px solid red;
+}
 
-    footer {
-        text-align: center;
-        padding: 20px;
-        color: #888;
-    }
+.good {
+    background: rgba(34,197,94,0.2);
+    border-left: 5px solid #22c55e;
+}
+
+code {
+    border-radius: 6px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #94a3b8;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>🚀 PySpark Coding Best Practices</h1>
-    <p>Learn how to write clean, efficient, and scalable code</p>
+<h1>🚀 PySpark Good Coding Practices</h1>
+<p>Write clean, efficient, and scalable PySpark code</p>
+
+<p>
+Good coding practices help improve readability, performance, and maintainability of your data pipelines,
+making them easier to debug and scale in real-world applications.
+</p>
 </header>
 
+<div class="container">
+
 <!-- 1 -->
-<section>
-<h2><span class="icon">📝</span> Use Clear, Descriptive Names</h2>
-<p>Improves readability and makes code easier to maintain.</p>
+<div class="card">
+<h2>📝 1. Use Clear, Descriptive Names</h2>
+<p>Improves readability and helps others understand your code quickly.</p>
 
 <div class="bad">
 <strong>Bad:</strong>
-<code>df1 = spark.read.parquet("data")</code>
+<pre><code class="language-python">df1 = spark.read.parquet("data")</code></pre>
 </div>
 
 <div class="good">
 <strong>Good:</strong>
-<code>df_customers = spark.read.parquet("data")</code>
+<pre><code class="language-python">df_customers = spark.read.parquet("data")</code></pre>
 </div>
-</section>
+</div>
 
 <!-- 2 -->
-<section>
-<h2><span class="icon">🔗</span> Chain Transformations Cleanly</h2>
-<p>Makes pipelines easier to read and debug.</p>
+<div class="card">
+<h2>🔗 2. Chain Transformations Cleanly</h2>
+<p>Makes pipelines easier to read and reduces unnecessary intermediate steps.</p>
 
 <div class="bad">
-<code>
-df = df.filter(col("age") > 18)
-df = df.select("name")
-</code>
+<pre><code class="language-python">df = df.filter(col("age") > 18)
+df = df.select("name")</code></pre>
 </div>
 
 <div class="good">
-<code>
-df = df.filter(col("age") > 18).select("name")
-</code>
+<pre><code class="language-python">df = df.filter(col("age") > 18).select("name")</code></pre>
 </div>
-</section>
+</div>
 
 <!-- 3 -->
-<section>
-<h2><span class="icon">📐</span> Define Schema Explicitly</h2>
-<p>Improves performance and ensures consistent data types.</p>
+<div class="card">
+<h2>📐 3. Define Schema Explicitly</h2>
+<p>Ensures consistent data types and improves performance.</p>
 
 <div class="bad">
-<code>
-spark.read.csv("file.csv", inferSchema=True)
-</code>
+<pre><code class="language-python">spark.read.csv("file.csv", inferSchema=True)</code></pre>
 </div>
 
 <div class="good">
-<code>
-spark.read.schema(schema).csv("file.csv")
-</code>
+<pre><code class="language-python">spark.read.schema(schema).csv("file.csv")</code></pre>
 </div>
-</section>
+</div>
 
 <!-- 4 -->
-<section>
-<h2><span class="icon">⚠️</span> Avoid Schema Inference</h2>
-<p>Schema inference is slow and can introduce errors.</p>
+<div class="card">
+<h2>⚠️ 4. Avoid Schema Inference</h2>
+<p>Schema inference is slower and can lead to incorrect data types.</p>
 
 <div class="bad">
-<code>
-inferSchema=True
-</code>
+<pre><code class="language-python">inferSchema=True</code></pre>
 </div>
 
 <div class="good">
-<code>
-Define schema manually for reliability
-</code>
+<pre><code class="language-python">Define schema manually for reliability</code></pre>
 </div>
-</section>
+</div>
 
 <!-- 5 -->
-<section>
-<h2><span class="icon">🚫</span> Handle Null Values</h2>
-<p>Prevents incorrect results and data quality issues.</p>
+<div class="card">
+<h2>🚫 5. Handle Null Values</h2>
+<p>Prevents incorrect filtering and unexpected errors.</p>
 
 <div class="bad">
-<code>
-df.filter(col("age") > 18)
-</code>
+<pre><code class="language-python">df.filter(col("age") > 18)</code></pre>
 </div>
 
 <div class="good">
-<code>
-df.filter(col("age").isNotNull()).filter(col("age") > 18)
-</code>
+<pre><code class="language-python">df.filter(col("age").isNotNull())
+  .filter(col("age") > 18)</code></pre>
 </div>
-</section>
+</div>
 
 <!-- 6 -->
-<section>
-<h2><span class="icon">⚙️</span> Avoid Hardcoding Configs</h2>
-<p>Makes code reusable and easier to maintain.</p>
+<div class="card">
+<h2>⚙️ 6. Avoid Hardcoding Paths/Configs</h2>
+<p>Makes code reusable and flexible across environments.</p>
 
 <div class="bad">
-<code>
-spark.read.parquet("/data/file")
-</code>
+<pre><code class="language-python">spark.read.parquet("/data/file")</code></pre>
 </div>
 
 <div class="good">
-<code>
-spark.read.parquet(DATA_PATH)
-</code>
+<pre><code class="language-python">spark.read.parquet(DATA_PATH)</code></pre>
 </div>
-</section>
+</div>
 
 <!-- 7 -->
-<section>
-<h2><span class="icon">📦</span> Select Only Required Columns</h2>
-<p>Reduces processing time and improves performance.</p>
+<div class="card">
+<h2>📦 7. Select Only Required Columns</h2>
+<p>Reduces memory usage and improves processing efficiency.</p>
 
 <div class="bad">
-<code>
-df = spark.read.parquet("data")
-</code>
+<pre><code class="language-python">df = spark.read.parquet("data")</code></pre>
 </div>
 
 <div class="good">
-<code>
-df = spark.read.parquet("data").select("id", "name")
-</code>
+<pre><code class="language-python">df = spark.read.parquet("data")
+       .select("id", "name")</code></pre>
 </div>
-</section>
+</div>
 
 <!-- 8 -->
-<section>
-<h2><span class="icon">🚀</span> Use Built-in Spark Functions</h2>
-<p>Enables Spark to optimize execution efficiently.</p>
+<div class="card">
+<h2>🚀 8. Use Built-in Spark Functions</h2>
+<p>Built-in functions are optimized and faster than Python UDFs.</p>
 
 <div class="bad">
-<code>
-def upper_func(x):
+<pre><code class="language-python">def upper_func(x):
     return x.upper()
-    
-udf_upper = udf(upper_func)
-</code>
+
+udf_upper = udf(upper_func)</code></pre>
 </div>
 
 <div class="good">
-<code>
-from pyspark.sql.functions import upper
+<pre><code class="language-python">from pyspark.sql.functions import upper
 
-df.withColumn("name_upper", upper(col("name")))
-</code>
+df.withColumn("name_upper", upper(col("name")))</code></pre>
 </div>
-</section>
+</div>
+
+</div>
 
 <footer>
-    <p>✅ Designed for learning PySpark best practices</p>
+<p>✅ Designed for students learning PySpark best practices</p>
 </footer>
+
+<!-- Prism JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 
 </body>
 </html>
