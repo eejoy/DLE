@@ -113,11 +113,12 @@ Clear naming improves readability and helps developers quickly understand the pu
 Poor naming can make code harder to debug and maintain over time. Meaningful names ensure that the intent of the code is clear without needing excessive comments.
 </p>
 <p style="color: #003366;">
-<strong>Example: </strong>
+<strong>Example: </strong> 
 </p>
 <div class="bad">
-<strong>Bad ❌ </strong>
-<pre><code class="language-python">df1 = spark.read.parquet("data")</code></pre>
+<strong>Bad  </strong>
+<pre><code class="language-python">df1 = spark.read.parquet("customer_data")</code></pre>
+<pre><code class="language-python">#df1 is not descriptive of the data content</code></pre>
 </div>
 
 <div class="good">
