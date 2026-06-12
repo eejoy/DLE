@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PySpark Good Coding Practice</title>
+
+<!-- Prism -->
+https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css
+https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js
+.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #ffffff;
+    color: #1a1a1a;
+}
+
+header {
+    background: #003366;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+/* Progress bar */
+#progressBar {
+    height: 10px;
+    background: #ddd;
+}
+#progress {
+    height: 10px;
+    width: 0%;
+    background: #2563eb;
+    transition: width 0.5s;
+}
+
+/* Layout */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Cards */
+.card {
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(10px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+.bad {
+    background: #fdecea;
+    border-left: 6px solid #b91c1c;
+    padding: 10px;
+}
+
+.good {
+    background: #ecfdf5;
+    border-left: 6px solid #047857;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* Quiz */
+.quiz {
+    background: #eef2ff;
+    border-left: 6px solid #4338ca;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    background: #2563eb;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+.feedback {
+    margin-top: 10px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🚀 PySpark Good Coding Practice</h1>
+</header>
+
+<div id="progressBar"><div id="progress"></div></div>
+
+<div class="container">
+
+<!-- INTRO -->
+<div class="card">
+<p>
+Good coding practices are essential when working with PySpark, particularly because data processing tasks often involve large-scale datasets and complex transformations. Writing clear, well-structured code makes it easier to understand, debug, and maintain pipelines, both for yourself and for others who may work with the code in the future. In distributed systems, small inefficiencies can quickly become major performance issues.
+</p>
+</div>
+
+<!-- Example Practice -->
+<div class="card">
+<h2>📝 Use Clear Names</h2>
+
+<div class="bad">
+<strong>Bad</strong>
+<pre><code class="language-python">df1 = spark.read.parquet("data")</code></pre>
+</div>
+
+<div class="good">
+<strong>Good</strong>
+<pre><code class="language-python">df_customers = spark.read.parquet("data")</code></pre>
+</div>
+</div>
+
+<!-- QUIZ SECTION -->
+<div class="card">
+<h2>🧠 Practice Quiz</h2>
+
+<div class="quiz">
+<p><strong>Q1:</strong> What is wrong with this code?</p>
+<pre><code class="language-python">df1 = spark.read.parquet("data")
+df1 = df1.withColumn("x", udf(lambda x: x.upper())("name"))</code></pre>
+
+<button onclick="checkAnswer(this, true)">Poor naming</button>
+<button onclick="checkAnswer(this, true)">Unnecessary UDF</button>
+<button onclick="checkAnswer(this, false)">Efficient code</button>
+
+<p class="feedback"></p>
+</div>
+
+<div class="quiz">
+<p><strong>Q2:</strong> Identify the issue:</p>
+<pre><code class="language-python">spark.read.csv("file.csv", inferSchema=True)</code></pre>
+
+<button onclick="checkAnswer(this, true)">Schema inference used</button>
+<button onclick="checkAnswer(this, false)">Correct production practice</button>
+
+<p class="feedback"></p>
+</div>
+
+<div class="quiz">
+<p><strong>Q3:</strong> What's wrong here?</p>
+<pre><code class="language-python">df = spark.read.parquet("data")</code></pre>
+
+<button onclick="checkAnswer(this, true)">No column pruning</button>
+<button onclick="checkAnswer(this, false)">Fully optimized</button>
+
+<p class="feedback"></p>
+</div>
+
+<div class="quiz">
+<p><strong>Q4:</strong> Identify improvement:</p>
+<pre><code class="language-python">spark.read.parquet("/data/file")</code></pre>
+
+<button onclick="checkAnswer(this, true)">Hardcoded path</button>
+<button onclick="checkAnswer(this, false)">Best practice</button>
+
+<p class="feedback"></p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+let totalQuestions = 4;
+let answered = 0;
+
+function checkAnswer(button, isCorrect) {
+    const feedback = button.parentElement.querySelector(".feedback");
+
+    if (feedback.innerHTML !== "") return;
+
+    if (isCorrect) {
+        feedback.innerHTML = "✅ Correct!";
+        feedback.style.color = "green";
+    } else {
+        feedback.innerHTML = "❌ Try again.";
+        feedback.style.color = "red";
+    }
+
+    if (isCorrect) {
+        answered++;
+        updateProgress();
+    }
+}
+
+function updateProgress() {
+    let percent = (answered / totalQuestions) * 100;
+    document.getElementById("progress").style.width = percent + "%";
+}
+</script>
+
+</body>
+</html>
