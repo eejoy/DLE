@@ -170,3 +170,114 @@ Explicit schemas provide stability and ensure your pipeline behaves consistently
 <div class="card">
 <h2>🚫 5. Always Handle Null Values</h2>
 <p>
+Null values can lead to incorrect filtering results or silent errors in transformations.
+</p>
+<p>
+Handling nulls explicitly ensures accurate outputs and improves data quality.
+</p>
+
+<div class="bad">
+<pre><code class="language-python">df.filter(col("age") > 18)</code></pre>
+</div>
+
+<div class="good">
+<pre><code class="language-python">df.filter(col("age").isNotNull())
+  .filter(col("age") > 18)</code></pre>
+</div>
+</div>
+
+<div class="card">
+<h2>⚙️ 6. Avoid Hardcoding Paths/Configs</h2>
+<p>
+Hardcoding reduces flexibility and makes code environment-dependent.
+</p>
+<p>
+Using configuration variables allows code reuse across development, testing, and production environments.
+</p>
+
+<div class="bad">
+<pre><code class="language-python">spark.read.parquet("/data/file")</code></pre>
+</div>
+
+<div class="good">
+<pre><code class="language-python">DATA_PATH = "/data/file"
+spark.read.parquet(DATA_PATH)</code></pre>
+</div>
+</div>
+
+<div class="card">
+<h2>📦 7. Select Only Required Columns</h2>
+<p>
+Selecting only needed columns reduces data movement and memory usage.
+</p>
+<p>
+This improves performance by minimizing unnecessary computations.
+</p>
+
+<div class="bad">
+<pre><code class="language-python">df = spark.read.parquet("data")</code></pre>
+</div>
+
+<div class="good">
+<pre><code class="language-python">df = spark.read.parquet("data").select("id", "name")</code></pre>
+</div>
+</div>
+
+<div class="card">
+<h2>🚀 8. Use Built-in Spark Functions</h2>
+<p>
+Built-in functions are optimized by Spark’s execution engine and perform more efficiently.
+</p>
+<p>
+Python UDFs bypass these optimizations and can significantly slow down processing.
+</p>
+
+<div class="bad">
+<pre><code class="language-python">def upper_func(x):
+    return x.upper()
+
+udf_upper = udf(upper_func)</code></pre>
+</div>
+
+<div class="good">
+<pre><code class="language-python">from pyspark.sql.functions import upper
+df.withColumn("name_upper", upper(col("name")))</code></pre>
+</div>
+</div>
+
+<!-- PRACTICE -->
+<div class="card">
+<h2>🧠 Practice Exercises</h2>
+<p>Identify up to three bad practices in each example:</p>
+
+<div class="exercise">
+<strong>Exercise 1</strong>
+<pre><code class="language-python">df1 = spark.read.parquet("data")
+df1 = df1.withColumn("name2", udf(lambda x: x.upper())("name"))</code></pre>
+</div>
+
+<div class="exercise">
+<strong>Exercise 2</strong>
+<pre><code class="language-python">df = spark.read.csv("file.csv", inferSchema=True)
+df = df.filter(col("age") > 18)</code></pre>
+</div>
+
+<div class="exercise">
+<strong>Exercise 3</strong>
+<pre><code class="language-python">df = spark.read.parquet("/data/file")
+df = df.select("*")</code></pre>
+</div>
+
+<div class="exercise">
+<strong>Exercise 4</strong>
+<pre><code class="language-python">df = spark.read.parquet("data")
+df = df.filter(col("age") > 18)
+df = df.select("name")</code></pre>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
