@@ -92,9 +92,11 @@ footer {
 <h2>Introduction</h2>
 <p>
 Good coding practices are essential when working with PySpark, particularly because data processing tasks often involve large-scale datasets and complex transformations. Writing clear, well-structured code makes it easier to understand, debug, and maintain pipelines, both for yourself and for others who may work with the code in the future. In a distributed computing environment like Spark, small inefficiencies or unclear logic can quickly lead to performance bottlenecks or errors that are difficult to trace.
-
+</p>
+<p>
 Adopting good coding practices in PySpark not only improves code quality but also enhances performance and scalability. By using efficient transformations, managing schemas properly, and leveraging built-in Spark functions, developers can ensure that their applications run faster and make optimal use of cluster resources. Ultimately, following best practices leads to more reliable, reusable, and production-ready data pipelines that are easier to extend and maintain over time.
-
+</p>
+<p>
 We will look at key good coding practices that can help you write cleaner, more efficient, and easier-to-maintain data analysis code.
 </p>
 </section>
@@ -103,7 +105,13 @@ We will look at key good coding practices that can help you write cleaner, more 
 
 <div class="card">
 <h2>📝 1. Use Clear, Descriptive Variable & Function Names</h2>
-<p>Clear variable names improve readability and help others quickly understand your code.</p>
+
+<p>
+Clear naming improves readability and helps developers quickly understand the purpose of variables and datasets. When working in team environments, descriptive naming reduces confusion and makes collaboration more effective.
+</p>
+<p>
+Poor naming can make code harder to debug and maintain over time. Meaningful names ensure that the intent of the code is clear without needing excessive comments.
+</p>
 
 <div class="bad">
 <strong>Bad</strong>
